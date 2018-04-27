@@ -1,0 +1,38 @@
+{
+  "name": "whackamole",
+  "version": "1.0.0",
+  "private": true,
+  "test": "jest",
+  "author": "Chester Beard",
+  "devDependencies": {
+    "babel-jest": "17.0.2",
+    "babel-preset-react-native": "1.9.0",
+    "eslint": "3.12.1",
+    "eslint-config-airbnb": "13.0.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "3.0.1",
+    "eslint-plugin-react": "6.8.0",
+    "jest": "17.0.3",
+    "react-test-renderer": "15.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "dependencies": {
+    "firebase": "3.6.3",
+    "npm": "^6.0.0",
+    "react": "^16.0.0-alpha.6",
+    "react-native": "^0.44.0"
+  },
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "rc-start": "npm start -- --reset-cache",
+    "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
+    "clean-start": "npm run clean && npm run rc-start",
+    "fresh-install": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm install",
+    "fresh-start": "npm run fresh-install && npm run rc-start",
+    "setup": "brew install watchman && yarn global add react-native-cli && npm run fresh-install",
+    "tron": "node_modules/.bin/reactotron",
+    "ios": "react-native run-ios"
+  }
+}
