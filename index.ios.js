@@ -14,7 +14,7 @@ import {
 
 import App from './App.js'
 
-export default class whackamole extends Component {
+export default class Whackamole extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('whackamole', () => whackamole);
+AppRegistry.registerComponent('whackamole', () => Whackamole);

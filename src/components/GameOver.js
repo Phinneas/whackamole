@@ -6,7 +6,7 @@ import {
   View
 } from 'react-native';
 
-export default class GameOver extends React.Component {
+export default class GameOver extends Component {
   render() {
     return (
       <View style={styles.container}>

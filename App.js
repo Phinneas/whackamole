@@ -11,7 +11,7 @@ import GameBoard from './src/components/GameBoard.js';
 import GameOver from './src/components/GameOver.js';
 import Menu from './src/components/Menu.js';
 
-export default class App extends Component {
+export default class Whackamole extends Component {
   state = {
     currentHigh: 0,
     score: 0,
@@ -19,11 +19,14 @@ export default class App extends Component {
     holes: 0,
   };
 
-  _setup = (num) => {
-    this.setState({holes: num});
+  componentDidMount() {
+
+    AsyncStorage.getItem('highScore').then((value) => {
+        this.setState({currentHigh: value});
+    }).done();
   }
 
-  _endGame = () => {
+  endGame = () => {
 
     if(this.state.score > this.state.currentHigh) {
       AsyncStorage.setItem('highScore', this.state.score.toString());
@@ -36,23 +39,20 @@ export default class App extends Component {
     this.setState({gameover: true});
   }
 
-  _restart = () => {
+  restart = () => {
     this.setState({
       gameover: false,
       score: 0,
     });
   }
 
-  _updateScore = () => {
-    let newScore = this.state.score + 1;
-    this.setState({score: newScore});
+  setup = (num) => {
+    this.setState({holes: num});
   }
 
-  componentDidMount() {
-
-    AsyncStorage.getItem('highScore').then((value) => {
-        this.setState({currentHigh: value});
-    }).done();
+  updateScore = () => {
+    let newScore = this.state.score + 1;
+    this.setState({score: newScore});
   }
 
   render() {
@@ -62,15 +62,15 @@ export default class App extends Component {
         <Text style={styles.title}>Whack-a-Mole!!!</Text>
         {this.state.holes === 0 ?
           <View style={styles.board}>
-            <Menu setup={this._setup} />
+            <Menu setup={this.setup} />
           </View> :
           <View style={styles.board}>
 
             <Text style={styles.basicText}>Current High Score: {this.state.currentHigh} </Text>
             <Text style={styles.basicText}>Current Score: {this.state.score} </Text>
 
-            {this.state.gameover === true ? <GameOver restart={this._restart} /> :
-            <GameBoard updateScore={this._updateScore} holes={this.state.holes} score={this.state.score} endGame={this._endGame} />}
+            {this.state.gameover === true ? <GameOver restart={this.restart} /> :
+            <GameBoard updateScore={this.updateScore} holes={this.state.holes} score={this.state.score} endGame={this.endGame} />}
 
           </View>
         }

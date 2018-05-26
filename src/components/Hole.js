@@ -3,19 +3,17 @@ import {
   TouchableHighlight,
   StyleSheet,
   Text,
-  Image
+  Image,
+  View
 } from 'react-native';
-
-import HoleImg from '../assets/img/hole.png';
-import HoleMask from '../assets/img/holeMask.png';
 
 export default class Hole extends Component {
   render() {
     return (
-      <div>
-        <Image source={HoleImg}  style={this.props.style} />
-        <Image source={HoleMask} style={this.props.style} />
-      </div>
+      <View>
+        <Image source={require('../assets/img/hole.png')}  style={this.props.style} />
+        <Image source={require('../assets/img/holeMask.png')} style={this.props.style} />
+      </View>
 
     );
   }

@@ -8,7 +8,7 @@ import {
 
 import GamePiece from './GamePiece.js';
 
-export default class GameRow extends React.Component {
+export default class GameRow extends Component {
   render() {
     return (
       <View style={styles.gameRow}>
@@ -17,7 +17,7 @@ export default class GameRow extends React.Component {
             index+=this.props.indexStart;
             return (
               <View key={index}>
-                <GamePiece updatePiece={ () => this.props.Guac(index)} type={type} />
+                <GamePiece updatePiece={ () => this.props.mole(index)} type={type} />
               </View>
             );
           })

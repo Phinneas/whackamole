@@ -10,31 +10,29 @@ import GameRow from './GameRow.js';
 
 const ROW_NUM = 3;
 
-export default class GameBoard extends React.Component {
+export default class GameBoard extends Component {
   state = {
     pieces: [],
     defaultPieces: [],
   };
 
-  _moled = (index) => {
-    //shows mole for slightly longer
-    clearTimeout(this.resetTimeout);
-    let curPieces = this.state.pieces;
-    curPieces[index] = 'mole';
-    this.props.updateScore();
-    this.setState({pieces: curPieces});
-
-    this.refillHoleTimeout = setTimeout(() => {
-      let defaultPieces = Array(this.props.holes).fill('hole');
-      this.setState({pieces: defaultPieces});
-    }, 500);
+  componentDidMount() {
+    let defaultPieces = Array(this.props.holes).fill('hole');
+    this.setState({pieces: defaultPieces});
+    this.intervalID = setInterval(this.loadMole, 3000);
+    setTimeout(this.props.endGame, 30000);
   }
 
-  _loadMole = () => {
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
+    clearTimeout(this.refillHoleTimeout);
+  }
+
+  loadMole = () => {
     setTimeout(() => {
-      let defaultPieces = Array(this.props.holes).fill('hole');
-      this.setState({pieces: defaultPieces});
-    }, 300);
+         let defaultPieces = Array(this.props.holes).fill('hole');
+         this.setState({pieces: defaultPieces});
+   	  }, 30);
 
     setTimeout(() => {
       let index = Math.floor(Math.random() * (this.props.holes - 0) + 0);
@@ -49,16 +47,18 @@ export default class GameBoard extends React.Component {
     }, 100);
   }
 
-  componentDidMount() {
-    let defaultPieces = Array(this.props.holes).fill('hole');
-    this.setState({pieces: defaultPieces});
-    this.intervalID = setInterval(this._loadMole, 3000);
-    setTimeout(this.props.endGame, 30000);
-  }
+  mole = (index) => {
+    //shows mole for slightly longer
+    clearTimeout(this.resetTimeout);
+    let curPieces = this.state.pieces;
+    curPieces[index] = 'mole';
+    this.props.updateScore();
+    this.setState({pieces: curPieces});
 
-  componentWillUnmount() {
-    clearInterval(this.intervalID);
-    clearTimeout(this.refillHoleTimeout);
+    this.refillHoleTimeout = setTimeout(() => {
+      let defaultPieces = Array(this.props.holes).fill('hole');
+      this.setState({pieces: defaultPieces});
+    }, 500);
   }
 
   render() {
@@ -74,7 +74,7 @@ export default class GameBoard extends React.Component {
         {portions.map((portion, index) => {
           return (
             <View key={index}>
-              <GameRow Mole={this.moled} indexStart={index*3} half={portion} />
+              <GameRow mole={this.mole} indexStart={index*3} half={portion} />
             </View>
           );
         })}

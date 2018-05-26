@@ -8,10 +8,10 @@ import {
 
 import Mole from './Mole.js'
 import Hole from './Hole.js'
- 
 
-export default class GamePiece extends React.Component {
-    render() {
+
+export default class GamePiece extends Component {
+    render() {    //switches from mole to hole
         let piece = <View />;
         if(this.props.type === 'hole') {
             piece = <Hole style={styles.piece}/>;

@@ -6,7 +6,7 @@ import {
   View
 } from 'react-native';
 
-export default class Menu extends React.Component {
+export default class Menu extends Component {
   render() {
     return(
       <View>
